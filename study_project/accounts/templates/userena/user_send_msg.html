@@ -1,0 +1,53 @@
+{% extends "userena/user_prepods.html" %}
+
+{% block title %}
+    Отправка сообщения преподавателю {{prep.name}}
+{% endblock %}
+
+{% block breadcrumbs %}    
+    {{ block.super }} --> Отправка сообщения преподавателю {{prep.name}}</a>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+    {% if error == True %}
+        <h2>Нельзя посылать сообщение от чужого имени!!</h2>
+    {% else %}
+    <h2>Переписка с преподавателем {{prep.name}}</h2>
+    {% for msg in message_list %}        
+        {% if msg.from_to == False %}
+            <p>{{msg.user}} to {{msg.prep}}</p>
+        {% else %}
+            <p>{{msg.prep}} to {{msg.user}}</p>
+        {% endif %}
+        <p><b>{{msg.name}}</b></p>
+        <p><i>{{msg.date}}</i></p>
+        <p>{{msg.text}}</p>
+        <hr>
+        <br/>
+    {% endfor %}
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if message_list.has_previous %}
+            <a href="?page={{ message_list.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ message_list.number }} из {{ message_list.paginator.num_pages }}.
+        </span>
+
+        {% if message_list.has_next %}
+            <a href="?page={{ message_list.next_page_number }}">Следующая</a>
+        {% endif %}
+    </span>
+</div>
+<br/>
+
+    <form action="{% url 'userena_send_prepod_msg' user.username prep.id%}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+    {% endif %}
+{% endblock %}

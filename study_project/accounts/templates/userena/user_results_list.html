@@ -1,0 +1,59 @@
+{% extends "study_base.html" %}
+
+{% block title %}
+    Результаты практических занятий пользователя {{user.username}}
+{% endblock %}
+
+{% block breadcrumbs %}    
+    {{ block.super }} --> <a href="{% url 'userena_results' user.username %}">Результаты практических занятий пользователя</a>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+    {% if error == True %}
+        <h2>Вы не можете просматривать чужие академические результаты!</h2>
+    {% else %}
+        <h2>Результаты</h2>
+        <table>
+            <tr><td>Название курса</td><td>Сдано?</td><td>Дата</td><td>Достижение</td></tr>
+            {% for course, results in course_results.items %}
+                <tr>
+                    <td>{{results.0.name}}</td>
+                    <td>
+                        {% if course.success %}
+                            Да                        
+                        {% else %}
+                            Нет
+                        {% endif %}
+                    </td>                
+                    <td>
+                        {{course.date}}
+                    </td>
+                    <td>
+                        {% if course.success %}
+                            <img src="{{ results.0.image_small.url }}" />
+                        {% endif %}
+                    </td>
+                </tr>            
+                <tr><td>                 </td><td>Название практического занятия</td><td>Результат</td><td>Сдано?</td><td>Дата</td></tr>
+                {% for res, pract in results.1.items %}
+                <tr>
+                    <td>                 </td>
+                    <td><a href="{% url 'result' pract.id %}">{{pract.name}}</a></td>
+
+                    <td>{{res.result}} / {{res.max}}</td>                    
+
+                    <td>{% if res.success %}
+                            <img src ="{% static 'check.jpg' %}"/>
+                        {% else %}
+                            <img src ="{% static 'uncheck.jpg' %}"/>
+                        {% endif %}
+                    </td>
+                    <td>{{res.date}}</td>
+                </tr>            
+                {% endfor %}        
+            {% endfor %}
+            <p></p>
+        </table>
+    {% endif %}
+{% endblock %}

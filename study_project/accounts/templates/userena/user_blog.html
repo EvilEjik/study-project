@@ -1,0 +1,27 @@
+{% extends "study_base.html" %}
+
+{% block title %}
+    Блог пользователя {{cur_user.username}}
+{% endblock %}
+
+{% block breadcrumbs %}    
+    {{ block.super }} --> <a href="/accounts/">Список пользователей</a> --> <a href="{% url 'userena_blog' cur_user.username %}">Блог пользователя {{cur_user.username}}</a>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+    {% if my_blog == True %}
+        <a href="{% url 'userena_add_note' cur_user.username %}">Добавление новой записи в блог</a>
+        <br />
+    {% endif %}
+    <h2>Блог пользователя {{cur_user.username}}</h2>    
+        {% for note in note_list %}
+            <h3>{{note.name}}</h3>
+            <p>{{note.date}}</p>
+            {% if note.image %}
+                <img src="{{ note.image_small.url }}" />
+            {% endif %}
+            <p>{{note.description}}</p>
+            <hr size=3>
+        {% endfor %}  
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "study_base.html" %}
+{% block content %}
+    {% load static %}
+    <p></p>
+    <h1>Главная страница!</h1>
+    <h2>Выберите интересующий вас раздел:</h2>
+    <table>
+        <tr>
+            <td>
+                Учебная часть
+            </td>
+            <td>
+                Практическая часть
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href ="lection_part/courses/"><img src ="{% static 'lection.jpg' %}"/></a>
+            </td>
+            <td>
+                <a href ="/practic_part/courses/"><img src ="{% static 'practic.jpg' %}"/></a>
+            </td>
+        </tr>
+    </table>    
+    <p></p>
+{% endblock %}

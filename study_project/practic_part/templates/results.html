@@ -1,0 +1,47 @@
+{% extends 'study_base.html' %}
+
+{% block head %}
+    <script>
+    function achivComp()
+    {
+        alert("Победа!")
+    }
+</script>
+{% endblock %}
+
+{% block title %}
+    Результаты занятия номер {{practical.id}}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="/practic_part/{{ practical.id }}/result">Результаты занятия номер {{practical.id}} </a>
+{% endblock %}
+
+{% block content %}
+    <h2>Результаты</h2>
+
+    {% for polls, choice_answer in polls_answers.items %}
+        <p align="justify">Вопрос: {{polls.question}}</p>
+        {% for c in choice_answer %}
+            {% if forloop.counter == 1 %}
+                <p>Правильный ответ: {{c}}</p>
+            {% else %}
+                <p>Ваш ответ: {{c}}</p>
+            {% endif %}        
+        {% endfor %}
+        <hr>
+    {% endfor %}
+    <p></p>
+    <b>Итоговый результат: {{res.result}} / {{res.max}}</b></br>
+    {% if res.success %}
+        <p>Поздравляем, вы успешно прошли тест!</p>
+    {% else %}
+        <p>Вам надо еще поучиться, уважаемый!</p>
+    {% endif %}
+    {% if achievement == True %}
+        {% if curs_succ == True %}
+            <h1>Поздравляем, вы заработали достижение!</h1>        
+            <img src="{{ im_achiv.url }}" />
+        {% endif %}
+    {% endif %}
+{% endblock %}

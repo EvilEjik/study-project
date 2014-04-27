@@ -1,0 +1,37 @@
+{% extends "study_base.html" %}
+
+{% block title %}
+    Добавление записи в блог
+{% endblock %}
+
+{% block breadcrumbs %}    
+    {{ block.super }} --> <a href="/accounts/">Список пользователей</a> --> <a href="{% url 'userena_add_note' cur_user.username %}">Добавление записи в блог {{cur_user.username}}</a>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+    {% if error == True %}
+        <h2>Нельзя редактирвоать чужой блог!</h2>
+    {% else %}
+    <h2>Добавление записи в блог {{cur_user.username}}</h2>
+    <form enctype="multipart/form-data" action="{% url 'userena_add_note' user.username %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {{ form.non_field_errors }}
+        {{ form.name.errors }}
+        <p><label for="id_name">Название:</label>
+            <input id="id_name" type="text" name="name" maxlength="100" /></p>        
+        {{ form.image.errors }}
+        <p><label for="id_image">Файл:</label>
+            <input type="file" name="image" id="id_image" /></p>        
+        {{ form.description.errors }}
+        <p><label for="id_descriptionr">Сообщение:</label>
+            <input type="text" name="description" id="id_description" /></p>
+        {{ form.captcha.errors }}
+        {{ form.captcha }}
+
+        <input type="submit" value="Submit" />
+    </form>
+    {% endif %}
+{% endblock %}

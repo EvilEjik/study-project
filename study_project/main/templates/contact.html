@@ -1,0 +1,30 @@
+{% extends 'study_base.html' %}
+
+{% block title %}
+    Обратная связь
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="/contact/">Обратная связь</a>
+{% endblock %}
+
+{% block content %}
+    <form action="/contact/" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.subject.errors }}
+        <p><label for="id_subject">Тема:</label>
+            <input id="id_subject" type="text" name="subject" maxlength="100" /></p>        
+        {{ form.message.errors }}
+        <p><label for="id_message">Сообщение:</label>
+            <input type="text" name="message" id="id_message" /></p>        
+        {{ form.sender.errors }}
+        <p><label for="id_sender">Отправитель:</label>
+            <input type="email" name="sender" id="id_sender" /></p>        
+        <p><label for="id_cc_myself">Копию себе?:</label>
+            <input type="checkbox" name="cc_myself" id="id_cc_myself" /></p>
+        {{ form.captcha.errors }}
+        {{ form.captcha }}
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

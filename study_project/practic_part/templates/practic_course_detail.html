@@ -1,0 +1,33 @@
+{% extends 'practic_courses_list.html' %}
+
+{% block title %}
+    Занятия практического курса {{course.name}}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="{% url 'practic_course_detail' course.id %}">{{ course.name }}</a>
+{% endblock %}
+
+{% block content %}
+
+    {% if user.id %}
+
+        <h2> <a href="{% url 'practic_course_detail' course.id %}"> {{ course.name }} </a> </h2>
+        <p><b>{{course.date}}</b></p>
+        <p>{{course.description}}</p>
+        <hr size=5 color="blue">
+
+        {% for practical in courses_practical %}        
+            <h3><a href="{% url 'practical_lesson_detail' course.id practical.id %}"> {{ practical.name }} </a></h3>
+            <p><b>{{practical.date}}</b></p>
+            <p>{{practical.description}}</p>
+            <hr>
+        {% endfor%}
+
+    {% else %}
+        <h2>Для работы с практической частью Вы должны быть пользователем системы!</h2>
+        <a href="/accounts/signup/">Регистрация</a>
+        <a href="/accounts/signin/">Вход</a>
+    {% endif %}
+
+{% endblock %}

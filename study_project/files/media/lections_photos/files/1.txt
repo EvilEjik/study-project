@@ -1,0 +1,6 @@
+<a href="#{{course.id}}"></a>
+    <a href="#x" class="overlay" id="{{course.id}}"></a>
+       <div class="popup">
+         <img class="is-image" src = "{{course.image.url}}">
+        <a class="close"title="Close" href="#close"></a>
+        </div>

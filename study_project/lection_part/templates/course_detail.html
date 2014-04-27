@@ -1,0 +1,42 @@
+{% extends 'courses_list.html' %}
+
+{% block title %}
+    Информация о курсе {{course.name}}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="{% url 'course_detail' course.id %}">{{ course.name }}</a>
+{% endblock %}
+
+{% block content %}
+    <h2> <a href="{% url 'course_detail' course.id %}"> {{ course.name }} </a> </h2>
+    <p><b>{{course.date}}</b></p>
+    <img src="{{ course.image_small.url }}" />
+    <p>{{course.description}}</p>
+    <hr size=5 color="red">
+
+    {% for lection in courses_lections%}        
+        <h3><a href="{% url 'lection_detail' course.id lection.id %}"> {{ lection.name }} </a></h3>
+        <p><b>{{lection.date}}</b></p>
+        <img src="{{ lection.image_small.url }}" />
+        <p>{{lection.description}}</p>
+        <hr>
+    {% endfor%}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if courses_lections.has_previous %}
+            <a href="?page={{ courses_lections.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ courses_lections.number }} из {{ courses_lections.paginator.num_pages }}.
+        </span>
+
+        {% if courses_lections.has_next %}
+            <a href="?page={{ courses_lections.next_page_number }}">Следующая</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

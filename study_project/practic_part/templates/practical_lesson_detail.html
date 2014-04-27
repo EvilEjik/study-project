@@ -1,0 +1,73 @@
+{% extends 'practic_course_detail.html' %}
+
+{% block title %}
+    Практическое занятие {{practical.name}}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="{{ practical.get_absolute_url }}"> {{practical.name}} </a>
+{% endblock %}
+
+{% block content %}
+    {% if user.id %}
+        {% if perm %}
+            <h2><a href="{% url 'practical_lesson_detail' course.id practical.id %}"> {{ practical.name }} </a></h2>
+            <p><b>{{practical.date}}</b></p>
+
+            <p></p>
+            <hr>
+
+            <form action="{% url 'vote' course.id practical.id %}" method="post">
+                {% csrf_token %}
+                
+                {% for polls_choices in polls_choices_list %}
+                    {% for polls, choices in polls_choices.items %}
+                        <p align="justify">{{polls.question}}</p>
+ 
+                        {% if polls.question_type == 'OPE' %}
+                            <input type="text" name="{{ polls.id }}" />
+                            <br />                        
+                        {% elif polls.question_type == 'COM' %}
+                            <table>
+                            {% with i=0 %}
+                            {% for choice in choices %}
+                                <tr>
+                                    <td><label>{{ choice.0 }}</label><br /></td>
+                                    <td><input type="text" name="{{ polls.id }}-{{forloop.counter}}"  /></td>
+                                    <td><label>{{ choice.1 }}</label><br /></td>
+                                </tr>
+                            {% endfor %}
+                            {% endwith %}
+                            </table>
+                        {% elif polls.question_type == 'SOR' %}
+                            <table>
+                            {% with i=0 %}
+                            {% for choice in choices %}
+                                <tr>
+                                    <td><label>{{ choice }}</label><br /></td>
+                                    <td><input type="text" name="{{ polls.id }}-{{forloop.counter}}"  /></td>                                    
+                                </tr>
+                            {% endfor %}
+                            {% endwith %}
+                            </table>
+                        {% elif polls.question_type == 'CH' %}
+                            {% for choice in choices %} 
+                                <input type="radio" name="{{ polls.id }}" value="{{choice.id }}" />
+                                <label>{{ choice.choice_text }}</label><br />
+                            {% endfor %}
+                        {% endif %}                        
+                    <hr>
+                    {% endfor %}
+                {% endfor %}                
+                <input type="submit" value="Vote"/>
+            </form>
+        {% else %}
+            <h3>Для прохождения данной практической работы вы должны сдать предыдущие!</h2>
+        {% endif %}
+    {% else %}
+        <h2>Для работы с практической частью Вы должны быть пользователем системы!</h2>
+        <a href="/accounts/signup/">Регистрация</a>
+        <a href="/accounts/signin/">Вход</a>
+    {% endif %}
+     
+{% endblock %}

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Образовательный проект - {% block title %}{% endblock %}</title>    
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'css/makh_project.css' %}">
+    {% block head %}
+	{% endblock %}
+</head>
+    <body>
+        <div class="container">
+            <header>    
+                 <nav>
+                     <ul>
+                         <li><a href="/">Главная</a></li>
+                         <li><a href="/lection_part/courses/">Учебный раздел</a></li>
+                         <li><a href="/practic_part/courses/">Практический раздел</a></li>
+                         <li><a href="/contact/">Обратная связь</a></li>
+                     </ul>
+                  </nav>                   
+            </header>
+
+            <div class="m_pr"></div>
+            
+            <section>
+                {% block breadcrumbs %}Навигация по сайту:  <a href="/">Главная</a>{% endblock %}
+                <p></p>
+                 <article class="center">                     
+                     <p></p>
+	                 {% block content %}                        
+	                 {% endblock %}
+                 </article>
+     
+                <aside class="right">
+                     <table>
+                        {% if user.id %}
+                            <tr>
+                                <td><p>Приветствуем, {{user.username}}!!!</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% if user.my_profile.get_mugshot_url == "" %}
+                                        <img src ="{% static 'avatar.jpg' %}"/></a>
+                                    {% else %}
+                                        <img src="{{ user.my_profile.get_mugshot_url }}"/></td>
+                                    {% endif %}
+                            </tr>
+                            <tr>
+                                <td><a href="{% url 'userena_profile_detail' user.username %}">Продолжить работу с личным кабинетом</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/accounts/signout">Выход из личного кабинета</a></td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td><p>Приветствуем, уважаемый!!!</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src ="{% static 'avatar.jpg' %}"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="/accounts/signup/">Регистрация</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/accounts/signin/">Вход</a></td>
+                            </tr>
+                        {% endif %}
+                     </table>     
+                 </aside>
+            </section>
+
+            <div class="m_pr"></div>
+
+            <footer>
+            </footer>
+
+        <!-- container --></div>
+    </body>
+</html>

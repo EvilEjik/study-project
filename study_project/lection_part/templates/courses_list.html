@@ -1,0 +1,37 @@
+{% extends 'study_base.html' %}
+
+{% block title %}
+    Список курсов
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="/lection_part/courses/">Список учебных курсов</a>
+{% endblock %}
+
+{% block content %}    
+    {% for course in courses %}
+        <h2>
+          <a href="{% url 'course_detail' course.id %}"> {{ course.name }} </a>
+        </h2>
+        <p><b>{{course.date}}</b></p>
+        <img src="{{ course.image_small.url }}" />
+        <p>{{course.description}}</p>
+        <hr>
+    {% endfor%}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if courses.has_previous %}
+            <a href="?page={{ courses.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ courses.number }} из {{ courses.paginator.num_pages }}.
+        </span>
+
+        {% if courses.has_next %}
+            <a href="?page={{ courses.next_page_number }}">Следующая</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

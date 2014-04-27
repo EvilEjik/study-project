@@ -1,0 +1,26 @@
+{% extends "study_base.html" %}
+
+{% block title %}
+    Список преподавателей пользователя {{cur_user.username}}
+{% endblock %}
+
+{% block breadcrumbs %}    
+    {{ block.super }} --> <a href="/accounts/">Список пользователей</a> --> <a href="{% url 'userena_blog' cur_user.username %}">Список преподавателей пользователя {{cur_user.username}}</a>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+    {% if my_prep == False %}
+        <h2>Нельзя просматривать чужой список преподавателей!!</h2>
+    {% else %}
+        <h2>Список преподавателей пользователя {{cur_user.username}}</h2>            
+        <table>
+        {% for prep in prepod_list %}
+            <tr>
+                <td>{{prep.name}}</td>
+                <td><a href="{% url 'userena_send_prepod_msg' cur_user.username prep.id %}">Отправка сообщения преподавателю</a></td>
+            </tr>            
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

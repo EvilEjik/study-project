@@ -1,0 +1,25 @@
+{% extends 'study_base.html' %}
+
+{% block title %}
+    Список практических курсов
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ block.super }} --> <a href="/practic_part/courses/">Список практических курсов</a>
+{% endblock %}
+
+{% block content %}
+    {% if user.id %}
+        {% for course in courses %}
+            <h2>
+              <a href="{% url 'practic_course_detail' course.id %}"> {{ course.name }} </a>
+            </h2>
+            <p><b>{{course.date}}</b></p>
+            <hr>
+        {% endfor%}
+    {% else %}
+        <h2>Для работы с практической частью Вы должны быть пользователем системы!</h2>
+        <a href="/accounts/signup/">Регистрация</a>
+        <a href="/accounts/signin/">Вход</a>
+    {% endif %}
+{% endblock %}
