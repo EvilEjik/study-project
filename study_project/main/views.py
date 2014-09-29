@@ -18,7 +18,7 @@ def contact(request):
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
             cc_myself = form.cleaned_data['cc_myself']
-            recipients = ['info@example.com']
+            recipients = ['evilejik@yandex.ru']
             if cc_myself:
                 recipients.append(sender)
             from django.core.mail import send_mail

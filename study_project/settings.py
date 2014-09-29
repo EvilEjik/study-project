@@ -1,4 +1,4 @@
-﻿# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -64,11 +64,11 @@ LOGOUT_URL = '/accounts/signout/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True  
-EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_PORT = 587  
-EMAIL_HOST_USER = 'makhstudyproject@gmail.com'  
-EMAIL_HOST_PASSWORD = 'qweasd123zxc'  
 
 
 ROOT_URLCONF = 'study_project.urls'
@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.postgresql_psycopg2',
         'NAME': 'study_project_db',
-        'USER': 'mk',
-        'PASSWORD': '1',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '',
         'PORT': '5432',
     }
@@ -118,6 +118,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(_PATH, 'files','static'),
 )
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',

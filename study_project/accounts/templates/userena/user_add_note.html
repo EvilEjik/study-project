@@ -18,18 +18,7 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        {{ form.non_field_errors }}
-        {{ form.name.errors }}
-        <p><label for="id_name">Название:</label>
-            <input id="id_name" type="text" name="name" maxlength="100" /></p>        
-        {{ form.image.errors }}
-        <p><label for="id_image">Файл:</label>
-            <input type="file" name="image" id="id_image" /></p>        
-        {{ form.description.errors }}
-        <p><label for="id_descriptionr">Сообщение:</label>
-            <input type="text" name="description" id="id_description" /></p>
-        {{ form.captcha.errors }}
-        {{ form.captcha }}
+        
 
         <input type="submit" value="Submit" />
     </form>
